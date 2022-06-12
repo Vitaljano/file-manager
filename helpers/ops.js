@@ -27,6 +27,9 @@ export const ops = async (args) => {
       case '--architecture':
         console.log(os.arch());
         break;
+      default:
+        console.log('Invalid input');
+        break;
     }
   } catch (err) {
     console.log('Operation failed');

@@ -1,5 +1,3 @@
-import fs from 'fs/promises';
-
 export const args = () => {
   const userInputArgs = process.argv.slice(2);
 

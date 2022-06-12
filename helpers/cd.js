@@ -1,5 +1,5 @@
-import fs from 'fs/promises';
-import path from 'path';
+import path, { parse } from 'path';
+import os from 'os';
 import { isExist } from './isExist.js';
 
 export const up = async (cwd) => {
@@ -10,7 +10,7 @@ export const up = async (cwd) => {
 export const cd = async (cwdPath, pathFromArgs) => {
   try {
     if (pathFromArgs === undefined) {
-      return cwdPath;
+      return os.homedir();
     }
 
     const isPathAbsolute = path.isAbsolute(pathFromArgs);
@@ -25,13 +25,11 @@ export const cd = async (cwdPath, pathFromArgs) => {
     }
 
     if (isDirectory) {
-      return isPathAbsolute ? pathFromArgs : relativePath;
+      return isPathAbsolute ? path.normalize(pathFromArgs) : path.normalize(relativePath);
     } else {
       return cwdPath;
     }
   } catch (err) {
-    console.log(err);
-
-    console.log('Path does exist');
+    console.log('Operation failed');
   }
 };

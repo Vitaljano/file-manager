@@ -10,18 +10,15 @@ export const decompress = async (cwd, filePath, fileDest) => {
 
     const int = createReadStream(pathIn);
     const out = createWriteStream(pathOut);
-    const unzip = zlib.createUnzip();
+    const brotli = zlib.createBrotliDecompress();
 
-    pipeline(int, unzip, out, (err) => {
+    // const stream = int.pipe(unzip).pipe(out);
+    pipeline(int, brotli, out, (err) => {
       if (err) {
-        console.log(err.message);
-      } else {
-        console.log('Decompress success');
+        console.log('Operation failed');
       }
     });
   } catch (err) {
-    console.log(err);
-
     console.log('Operation failed');
   }
 };

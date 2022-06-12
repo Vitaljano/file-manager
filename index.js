@@ -24,7 +24,8 @@ function greeting() {
   console.log(`Welcome to the File Manager, ${userName}!`);
   currentDirInfo();
 }
-async function currentDirInfo() {
+
+function currentDirInfo() {
   console.log(`You are currently in ${cwd}`);
 }
 
@@ -34,10 +35,9 @@ const index = async () => {
 
     switch (args[0]) {
       case 'ls':
-        await ls(cwd);
+        await ls(cwd, args[1]);
         currentDirInfo();
         break;
-
       case 'up':
         cwd = await up(cwd);
         currentDirInfo();
@@ -49,27 +49,28 @@ const index = async () => {
 
       case 'cat':
         await cat(cwd, args[1]);
-        currentDirInfo();
         break;
       case 'add':
-        add(cwd, args[1]);
+        await add(cwd, args[1]);
+        currentDirInfo();
         break;
       case 'rm':
-        rm(cwd, args[1]);
+        await rm(cwd, args[1]);
+        currentDirInfo();
         break;
       case 'rn':
-        rn(cwd, args[1], args[2]);
+        await rn(cwd, args[1], args[2]);
+        currentDirInfo();
         break;
       case 'os':
-        ops(args[1]);
+        await ops(args[1]);
+        currentDirInfo();
         break;
       case 'hash':
         await hash(cwd, args[1]);
-        currentDirInfo();
         break;
       case 'compress':
         await compress(cwd, args[1], args[2]);
-        currentDirInfo();
         break;
       case 'decompress':
         await decompress(cwd, args[1], args[2]);

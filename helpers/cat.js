@@ -14,8 +14,11 @@ export const cat = async (cwd, userInputPath) => {
       readStream.on('data', (chunk) => {
         console.log(chunk.toString());
       });
+      readStream.on('end', () => {
+        console.log(`You are currently in ${cwd}`);
+      });
     } else {
-      console.log('Path is wrong.');
+      console.log('Operation failed');
     }
   } catch (err) {
     console.log('Operation failed');
