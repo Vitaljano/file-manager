@@ -7,7 +7,16 @@ export const ops = async (args) => {
         console.log(JSON.stringify(os.EOL));
         break;
       case '--cpus':
-        console.log(os.cpus());
+        const cpu = os.cpus().map((item) => {
+          const speed = item.speed / 1000;
+          const convertedSpeed = speed < 0.1 ? speed * 100 : speed;
+          return {
+            model: item.model,
+            speed: convertedSpeed + ' GHz',
+          };
+        });
+        console.log(cpu);
+
         break;
       case '--homedir':
         console.log(os.homedir());
