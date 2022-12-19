@@ -1,23 +1,24 @@
 import fs from 'fs/promises';
 
-export const ls = async (dirPath, arg) => {
+export const ls = async (dirPath) => {
   try {
-    const stat = await fs.readdir(dirPath);
+    const dirInfo = await fs.readdir(dirPath, {withFileTypes: true});
+    const list = [];
 
-    if (arg === '-a') {
-      console.log(stat);
-      return;
+    for (const fileInfo of dirInfo){
+      
+      if(fileInfo.isDirectory()){
+        list.push({Name: fileInfo.name, Type: 'directory'});
+      }
+      if(fileInfo.isFile()){
+        list.push({Name: fileInfo.name, Type: 'file'});
+      }
     }
 
-    const list = stat.filter((item) => {
-      if (item.startsWith('.')) {
-        return false;
-      } else {
-        return true;
-      }
-    });
+   const sortedList = list.sort((a, b) => a.Name < b.Name)
+    
+   console.table(sortedList);
 
-    console.log(list);
   } catch (err) {
     throw err;
   }

@@ -1,4 +1,4 @@
-import readline from 'readline';
+import * as readline from 'node:readline/promises';
 import { stdin, stdout } from 'process';
 import os from 'os';
 
@@ -35,7 +35,7 @@ const index = async () => {
 
     switch (args[0]) {
       case 'ls':
-        await ls(cwd, args[1]);
+        await ls(cwd);
         currentDirInfo();
         break;
       case 'up':
